@@ -10882,3 +10882,58 @@ a.text-dark:focus {
   }
 }
 
+/* Website Main Style */
+
+.header-wrap {
+  min-height: 200px;
+  background: #444;
+}
+
+.header-wrap .header {
+  width: 100%;
+  text-align: center;
+}
+
+.header-wrap .header h1 {
+  color: #fff;
+  margin-top: 70px;
+}
+
+.body-wrap {
+  margin: 50px 0px 0px 0px;
+}
+
+.body-wrap .card-wraper {
+  margin-top: 30px;
+}
+
+.body-wrap .card-wraper .status-card {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.body-wrap .card-wraper .status-card .card-image {
+  width: 70px;
+  float: left;
+  margin: 10px;
+}
+
+.body-wrap .card-wraper .status-card .status-content {
+  margin: 10px 10px 10px 10px;
+}
+
+.body-wrap .card-wraper .status-card .status-content .name {
+  margin: 0;
+}
+
+.body-wrap .card-wraper .status-card .status-content .date {
+  margin: 0;
+}
+
+.body-wrap #statusform textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
