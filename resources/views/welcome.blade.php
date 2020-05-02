@@ -20,7 +20,7 @@
   @foreach ($status as $st)
     <div class="status-card">
       <div class="card-image">
-        <img src="http://bootflat.github.io/img/photo-4.jpg" alt="">
+        <img src="{{ $avater }}" alt="">
       </div>
       <div class="status-content">
         <p class="name">{{ $st->user->name }}</p>

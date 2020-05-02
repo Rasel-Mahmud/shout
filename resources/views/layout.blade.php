@@ -31,6 +31,8 @@
           
           @yield('status')
 
+          @yield('body')
+
         </div>
       </div>
     </div>

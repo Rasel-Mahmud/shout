@@ -21,3 +21,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/shout', [HomeController::class, 'home'])->name('shout');
 Route::post('/savestatus', [HomeController::class, 'saveStatus'])->name('shout.save');
+Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
+Route::post('/saveprofile', [HomeController::class, 'saveProfile'])->name('profile.save');

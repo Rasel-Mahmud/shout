@@ -21,7 +21,8 @@ class HomeController extends Controller
     public function home(){
         $userID = Auth::id();
         $status = Status::where('user_id', $userID)->orderBy('id', 'desc')->get();
-        return view('welcome', ['status'=> $status]);
+        $avater = empty( Auth::user()->avater ) ? asset('image/avater.png') : Auth::user()->avater;
+        return view('welcome', ['status'=> $status, 'avater' => $avater]);
     }
 
     public function saveStatus(Request $request){
@@ -34,6 +35,26 @@ class HomeController extends Controller
             $statusModel->user_id = $userID;
             $statusModel->save();
             return redirect()->route('shout');
+        }
+    }
+
+    public function profile(){
+        return view('profile');
+    }
+
+    public function saveProfile(Request $request){
+        if(Auth::check()){
+            $user = Auth::user();
+            $user->name = $request->post('name');
+            $user->email = $request->post('email');
+            $user->nickname = $request->post('nickname');
+
+            $profileImage ='user_'.$user->id. '.'. $request->image->extension();
+            $request->image->move(public_path('images', $profileImage));
+            $user->avater = asset("images/{$profileImage}");
+
+            $user->save();
+            return redirect()->route('profile');
         }
     }
 
