@@ -16,7 +16,8 @@ class CreateFriendsTable extends Migration
         Schema::create('friends', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('friend_id')->constrained();
+            $table->unsignedBigInteger('friend_id');
+            $table->foreign('friend_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

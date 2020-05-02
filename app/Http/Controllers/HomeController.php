@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Friend;
 use App\Status;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,6 +25,54 @@ class HomeController extends Controller
         $status = Status::where('user_id', $userID)->orderBy('id', 'desc')->get();
         $avater = empty( Auth::user()->avater ) ? asset('image/avater.png') : Auth::user()->avater;
         return view('welcome', ['status'=> $status, 'avater' => $avater]);
+    }
+
+    public function profileTimeline($nickname){
+        $user = User::where('nickname', $nickname)->first();
+        if($user){
+            $status = Status::where('user_id', $user->id)->orderBy('id', 'desc')->get();
+            $avater = empty( Auth::user()->avater ) ? asset('image/avater.png') : Auth::user()->avater;
+            $name = $user->name;
+            $displayaction = false;
+            if(Auth::check()){
+                if(Auth::user()->id != $user->id){
+                    $displayaction = true;
+                }
+            }
+            return view('timeline', ['status'=> $status,
+                                    'avater' => $avater,
+                                    'name' => $name,
+                                    'displayaction' => $displayaction,
+                                    'friendID' => $user->id
+                                    ]);
+        }else{
+            return redirect('/');
+        }
+    }
+
+    public function makeFriend($friendID){
+        $userID = Auth::user()->id;
+        
+        if(Friend::where('user_id', $userID)->where('friend_id', $friendID)->count() == 0){
+            $friendShip = new Friend();
+            $friendShip->user_id = $userID;
+            $friendShip->friend_id = $friendID;
+            $friendShip->save();
+        
+            $friendShip = new Friend();
+            $friendShip->friend_id = $userID;
+            $friendShip->user_id = $friendID;
+            $friendShip->save();
+        }
+
+        return redirect()->route('shout');
+    }
+
+    public function unFriend($friendID){
+        $userID = Auth::user()->id;
+        Friend::where('user_id', $userID)->where('friend_id', $friendID)->delete();
+        Friend::where('friend_id', $userID)->where('user_id', $friendID)->delete();
+        return redirect()->route('shout');
     }
 
     public function saveStatus(Request $request){

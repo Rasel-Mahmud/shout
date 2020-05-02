@@ -13,7 +13,8 @@
     <div class="container">
       <div class="row">
         <div class="header">
-          <h1>Home</h1>
+          <h1>{{ $name ?? 'Home' }}</h1>
+          @yield('friendButton')
         </div>
       </div>
     </div>
